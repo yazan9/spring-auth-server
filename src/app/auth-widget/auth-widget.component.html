@@ -27,6 +27,9 @@
                 <div *ngIf="signupErrorMessage != ''" class="alert alert-danger">
                     {{signupErrorMessage}}
                   </div>      
+                  <div *ngIf="signupSuccessMessage != ''" class="alert-success">
+                    {{signupSuccessMessage}}
+                  </div>      
                 <mat-form-field>
                   <input matInput placeholder="Email" [(ngModel)]="credentials.email" required name="login-email" #email="ngModel">
                 </mat-form-field>

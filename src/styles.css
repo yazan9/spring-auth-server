@@ -32,6 +32,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding-bottom: 1em;
 }
 
+.alert-success{
+  background-color: red;
+  color:white;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
 .main-page{
   width:80%; margin:auto;margin-top:10em;border:1px solid #cdcdcd;
   padding:1em;
