@@ -33,7 +33,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .alert-success{
-  background-color: red;
+  background-color: green;
   color:white;
   margin-top: 1em;
   margin-bottom: 1em;

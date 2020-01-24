@@ -59,7 +59,7 @@ export class AuthWidgetComponent implements OnInit {
     this.loadingResponse = true;
     this.auth.register(this.credentials).subscribe(() => {
       this.loadingResponse = false;
-      this.signupSuccessMessage = "Signed up successful"
+      this.signupSuccessMessage = "Signed up successfully"
       return;
       
     }, (err) => {
