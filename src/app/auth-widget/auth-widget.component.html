@@ -1,0 +1,41 @@
+<div style="background-color: black;padding:1em">
+<img id="logo_img" title="FTS Inc." src="https://ftsinc.com/wp-content/uploads/2015/07/fts_logo.png" alt="FTS Inc.">
+</div>
+<mat-tab-group mat-stretch-tabs>
+    <mat-tab label="Login">
+                    <form #loginForm = "ngForm" (ngSubmit)="login(loginForm)">
+        <div class="example-container">
+            <div *ngIf="loginErrorMessage" class="alert">
+                {{loginErrorMessage}}
+              </div>      
+
+            <mat-form-field>
+              <input matInput placeholder="Email" [(ngModel)]="credentials.email" required name="login-email" #email="ngModel">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Password" type="password" [(ngModel)]="credentials.password" name="login-password" required #password="ngModel">
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit">Login</button>
+        </div> 
+                </form>
+
+    </mat-tab>
+    <mat-tab label="SignUp">
+        <form #signupForm = "ngForm" (ngSubmit)="signup(signupForm)">
+            <div class="example-container">
+                <div *ngIf="signupErrorMessage != ''" class="alert alert-danger">
+                    {{signupErrorMessage}}
+                  </div>      
+                <mat-form-field>
+                  <input matInput placeholder="Email" [(ngModel)]="credentials.email" required name="login-email" #email="ngModel">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Password" type="password" [(ngModel)]="credentials.password" name="login-password" required #password="ngModel">
+                </mat-form-field>
+    
+                <button mat-raised-button color="primary" type="submit">Sign Up</button>
+            </div> 
+                    </form>
+    </mat-tab>
+  </mat-tab-group>
