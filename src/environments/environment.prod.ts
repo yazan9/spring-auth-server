@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  backendUri: 'http://localhost:8080'
+  backendUri: 'http://ec2-54-69-189-117.us-west-2.compute.amazonaws.com:8080'
 };
