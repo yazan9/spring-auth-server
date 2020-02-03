@@ -1,18 +1,28 @@
 <div class="main-page">
     <h1>You are authenticated</h1>
     <div style="color: blue" *ngIf="validity && validity.length">{{validity}}</div>
-    <p>Your Token's content is:</p>
-    <div class="example-container">
-       
-      
+    <p>Your Access Token's content is:</p>
+    <div class="example-container"> 
+      <h3>Access Token</h3>
+     
         <mat-form-field>
-          <textarea matInput placeholder="Token - try modifying its content and hit Validate Token button" [(ngModel)]="token"></textarea>
+          <textarea matInput placeholder="Access Token - try modifying its content and hit Validate Token button" [(ngModel)]="access_token"></textarea>
         </mat-form-field>
 
-        <button mat-raised-button color="primary" type="button" style="width:25em" (click)="validateToken()">Validate Token</button>
-      
-        <p>Information extracted from your token:</p>
+        <button mat-raised-button color="primary" type="button" style="width:25em" (click)="validateToken()">Validate Access Token</button>
+
+        <p>Information extracted from your access token:</p>
         {{details}}
+
+        <br><br>
+
+        <h3>Refresh Token</h3>
+
+        <mat-form-field>
+          <textarea matInput placeholder="Refresh Token" [(ngModel)]="refresh_token"></textarea>
+        </mat-form-field>
+      
+        <button mat-raised-button color="primary" type="button" style="width:25em" (click)="requestNewAccessToken()">Request New Access Token</button>
 
         <br><br>
         <button mat-raised-button color="warn" style="width:25em" (click)="logout()">Logout</button>

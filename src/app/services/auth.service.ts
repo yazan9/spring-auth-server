@@ -7,17 +7,23 @@ import { environment } from 'src/environments/environment';
 
 export interface UserDetails {
   id: string;
-  email: string;
+  sub: string;
   exp: number;
 }
 
 interface TokenResponse {
-  token: string;
+  access_token: string;
+  refresh_token:string;
 }
 
 export interface TokenPayload {
   email: string;
   password: string;
+}
+
+export interface NewAccessTokenRequestPayload{
+  email: string;
+  token: string;
 }
 
 @Injectable({
@@ -36,13 +42,22 @@ export class AuthenticationService {
     this.AuthenticationURL = `${this.env.backendUri}`;
    }
   
-   private saveToken(token: string): void {
-    localStorage.removeItem('auth-token');
-    localStorage.setItem('auth-token', token);
+  private saveAccessToken(token: string): void {
+    localStorage.removeItem('access-token');
+    localStorage.setItem('access-token', token);
   }
 
-  public getToken(): string {
-    return localStorage.getItem('auth-token');
+  public getAccessToken(): string {
+    return localStorage.getItem('access-token');
+  }
+
+  private saveRefreshToken(token: string): void {
+    localStorage.removeItem('refresh-token');
+    localStorage.setItem('refresh-token', token);
+  }
+
+  public getrefreshToken(): string {
+    return localStorage.getItem('refresh-token');
   }
 
   public logout(): void {
@@ -51,7 +66,7 @@ export class AuthenticationService {
   }
   
   public getUserDetails(): UserDetails {
-    const token = this.getToken();
+    const token = this.getAccessToken();
     let payload;
     if (token) {
      payload = token.split('.')[1];
@@ -79,10 +94,25 @@ export class AuthenticationService {
 
   public login(user: TokenPayload): Observable<any> {
     let base = this.http.post(this.AuthenticationURL+'/authenticate', user);
+    return this.pipeRequest(base);
+  }
+
+  public replaceAccessToken(){
+    let xxx = this.getUserDetails().sub;
+    let credentials: NewAccessTokenRequestPayload = {
+      email: this.getUserDetails().sub, 
+      token: this.getrefreshToken()
+    }
+    let base = this.http.post(this.AuthenticationURL+'/replace_access_token', credentials);
+    return this.pipeRequest(base);
+  }
+
+  public pipeRequest(base){
     const request = base.pipe(
       map((data: TokenResponse) => {
-        if (data.token) {
-          this.saveToken(data.token);
+        if (data.access_token && data.refresh_token) {
+          this.saveAccessToken(data.access_token);
+          this.saveRefreshToken(data.refresh_token);
         }
         return data;
         })
@@ -105,7 +135,7 @@ export class AuthenticationService {
    {
      return new HttpHeaders({
        'Content-Type':  'application/json',
-       'Authorization': `Bearer ${this.getToken()}`
+       'Authorization': `Bearer ${this.getAccessToken()}`
      })
    }
 }

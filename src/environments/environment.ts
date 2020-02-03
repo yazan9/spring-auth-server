@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   //backendUri: 'http://localhost:8080'
-  backendUri: 'http://localhost:8080'
+  backendUri: 'http://localhost:8081'
 };
 
 /*

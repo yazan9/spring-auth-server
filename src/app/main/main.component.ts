@@ -11,7 +11,8 @@ export class MainComponent implements OnInit {
 
   constructor(public auth:AuthenticationService, private router:Router) { }
 
-  token:string;
+  access_token:string;
+  refresh_token:string;
   details: string;
   validity: string;
 
@@ -20,8 +21,9 @@ export class MainComponent implements OnInit {
   }
 
   loadPage(){
-    this.token = this.auth.getToken();
-    if(!this.token){
+    this.access_token = this.auth.getAccessToken();
+    this.refresh_token = this.auth.getrefreshToken();
+    if(!this.access_token){
       this.router.navigate(['/login']);
       return;
     }
@@ -33,12 +35,18 @@ export class MainComponent implements OnInit {
   }
 
   validateToken(){
-    this.auth.validateToken(this.token).subscribe(()=>{
+    this.auth.validateToken(this.access_token).subscribe(()=>{
       this.loadPage();
-      this.validity = "Your token is valid";
+      this.validity = "Your access token is valid";
     }, (err)=>{
-      this.validity = "Your token is invalid";
+      this.validity = "Your access token is invalid";
       this.details = "";
+    })
+  }
+
+  requestNewAccessToken(){
+    this.auth.replaceAccessToken().subscribe((res)=> {
+      this.loadPage();
     })
   }
 
